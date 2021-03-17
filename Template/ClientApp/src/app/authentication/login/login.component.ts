@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserAuthRequest } from '../../interfaces/user-auth-request';
-import { AuthenticationService } from '../../shared/authentication.service';
+import { UserAuthRequest } from '../../interfaces/users/user-auth-request';
+import { UserAuthResponse } from '../../interfaces/users/user-auth-response';
+import { AuthenticationService } from '../../shared/services/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -23,16 +24,17 @@ export class LoginComponent implements OnInit {
       username: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required])
     })
-
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   public validateControl = (controlName: string) => {
     return this.loginForm.controls[controlName].invalid && this.loginForm.controls[controlName].touched
   }
+
   public hasError = (controlName: string, errorName: string) => {
     return this.loginForm.controls[controlName].hasError(errorName)
   }
+
   public loginUser = (loginFormValue) => {
     this.showError = false;
     const login = { ...loginFormValue };
@@ -41,8 +43,9 @@ export class LoginComponent implements OnInit {
       password: login.password
     }
     this._authService.loginUser('api/accounts/login', userForAuth)
-      .subscribe(res => {
+      .subscribe((res: UserAuthResponse)  => {
         localStorage.setItem("token", res.token);
+        this._authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
         this._router.navigate([this._returnUrl]);
       },
         (error) => {
@@ -50,4 +53,5 @@ export class LoginComponent implements OnInit {
           this.showError = true;
         })
   }
+
 }

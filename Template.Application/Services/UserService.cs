@@ -30,20 +30,6 @@ namespace Template.Application.Services
             return _userViewModels;
         }
 
-        public bool Post(UserViewModel userViewModel)
-        {
-            if (userViewModel.Id != Guid.Empty)
-                throw new Exception("UserID must be empty");
-
-            Validator.ValidateObject(userViewModel, new ValidationContext(userViewModel), true);
-
-            User _user = mapper.Map<User>(userViewModel);
-
-            this.userRepository.Create(_user);
-
-            return true;
-        }
-
         public UserViewModel GetById(string id)
         {
             if (!Guid.TryParse(id, out Guid userId))
@@ -94,7 +80,27 @@ namespace Template.Application.Services
         {
             return this.userRepository.CheckPassword(user.Id, password);
         }
-        #endregion
 
+        public UserRegisterResponseViewModel Register(UserRegisterRequestViewModel user)
+        {
+            User _user = mapper.Map<User>(user);
+
+            if (this.userRepository.Find(x => x.Email == _user.Email & !x.IsDeleted) != null)
+                return new UserRegisterResponseViewModel { IsSuccessfulRegistration = false, Errors = new List<string> { "Já existe usuário cadastrado para esse email" } };
+
+            _user.DateCreated = DateTime.Now;
+
+            try
+            {
+                userRepository.Create(_user);
+
+                return new UserRegisterResponseViewModel { IsSuccessfulRegistration = true };
+            }
+            catch (Exception e)
+            {
+                return new UserRegisterResponseViewModel { IsSuccessfulRegistration = false, Errors = new List<string> { e.Message } };
+            }
+        }
+        #endregion
     }
 }

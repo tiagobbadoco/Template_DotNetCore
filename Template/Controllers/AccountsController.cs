@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using Template.Application.Interfaces;
 using Template.Application.ViewModels;
+using Template.Domain.Entities;
 using Template.JWT;
 
 namespace Template.Controllers
@@ -12,13 +13,11 @@ namespace Template.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly IUserService userService;
-        private readonly IMapper mapper;
         private readonly JwtHandler jwtHandler;
 
-        public AccountsController(IUserService userService, IMapper mapper, JwtHandler jwtHandler)
+        public AccountsController(IUserService userService, JwtHandler jwtHandler)
         {
             this.userService = userService;
-            this.mapper = mapper;
             this.jwtHandler = jwtHandler;
         }
 
@@ -33,6 +32,22 @@ namespace Template.Controllers
             var tokenOptions = jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
             return Ok(new UserAuthResponseViewModel { IsAuthSuccessful = true, Token = token });
+        }
+
+        [HttpPost("Register")]
+        public IActionResult Register([FromBody] UserRegisterRequestViewModel request)
+        {
+            if (request == null || !ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            UserRegisterResponseViewModel response = userService.Register(request);
+
+            if (response.IsSuccessfulRegistration)
+                return StatusCode(201, response);
+            else
+                return BadRequest(response);
+
+            
         }
     }
 }

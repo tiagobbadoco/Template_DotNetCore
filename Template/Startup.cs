@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Template.Application.AutoMapper;
 using Template.Data.Context;
+using Template.Domain.Entities;
 using Template.IoC;
 using Template.JWT;
 
