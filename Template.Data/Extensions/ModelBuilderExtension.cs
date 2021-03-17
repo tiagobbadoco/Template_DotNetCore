@@ -10,7 +10,7 @@ namespace Template.Data.Extensions
         {
             modelBuilder.Entity<User>()
                 .HasData(
-                    new User { Id = Guid.NewGuid(), Name = "Administrador", Email = "admin@template.com", DateCreated = DateTime.Now, IsDeleted = false });
+                    new User { Id = Guid.NewGuid(), Name = "Administrador", Email = "admin@template.com", DateCreated = DateTime.Now, IsDeleted = false, Password = "Template" });
 
             return modelBuilder;
         }

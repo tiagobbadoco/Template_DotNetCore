@@ -1,4 +1,4 @@
-using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -6,9 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using Template.Application.AutoMapper;
 using Template.Data.Context;
 using Template.IoC;
+using Template.JWT;
 
 namespace Template
 {
@@ -25,10 +28,28 @@ namespace Template
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TemplateContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")).EnableSensitiveDataLogging());
-
             NativeInjector.RegisterServices(services);
-
             services.AddAutoMapper(typeof(AutoMapperSetup));
+
+            var jwtSettings = Configuration.GetSection("JwtSettings");
+            services.AddScoped<JwtHandler>();
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
+                    ValidAudience = jwtSettings.GetSection("validAudience").Value,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
+                };
+            });
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
@@ -60,6 +81,9 @@ namespace Template
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

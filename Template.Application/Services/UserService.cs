@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Threading.Tasks;
 using Template.Application.Interfaces;
 using Template.Application.ViewModels;
 using Template.Domain.Entities;
@@ -82,6 +83,18 @@ namespace Template.Application.Services
 
             return this.userRepository.Delete(_user);
         }
+
+        #region "Authentication"
+        public UserViewModel FindByEmail(string email)
+        {
+            return  mapper.Map<UserViewModel>(this.userRepository.GetByEmailAsync(email));
+        }
+
+        public bool CheckPassword(UserViewModel user, string password)
+        {
+            return this.userRepository.CheckPassword(user.Id, password);
+        }
+        #endregion
 
     }
 }
