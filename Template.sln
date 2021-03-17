@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CrossCutting", "CrossCuttin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.Data", "Template.Data\Template.Data.csproj", "{4BF3A178-E95E-40C8-9BE3-58C3E3DC18EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template.IoC", "Template.IoC\Template.IoC.csproj", "{CAC4110F-7145-4750-A692-B11150189DCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{4BF3A178-E95E-40C8-9BE3-58C3E3DC18EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BF3A178-E95E-40C8-9BE3-58C3E3DC18EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BF3A178-E95E-40C8-9BE3-58C3E3DC18EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CAC4110F-7145-4750-A692-B11150189DCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CAC4110F-7145-4750-A692-B11150189DCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CAC4110F-7145-4750-A692-B11150189DCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CAC4110F-7145-4750-A692-B11150189DCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,6 +62,7 @@ Global
 		{FDC86BC0-2FDC-4407-AC7A-E030B0784CA0} = {E5364784-41FC-497C-A24E-32D35DE905D3}
 		{4FAB5647-40F4-4073-BC15-0001FBA6DE0B} = {E5364784-41FC-497C-A24E-32D35DE905D3}
 		{4BF3A178-E95E-40C8-9BE3-58C3E3DC18EA} = {FDC86BC0-2FDC-4407-AC7A-E030B0784CA0}
+		{CAC4110F-7145-4750-A692-B11150189DCD} = {4FAB5647-40F4-4073-BC15-0001FBA6DE0B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {35FD31FF-8830-40A6-92D1-F0CF73855A26}
