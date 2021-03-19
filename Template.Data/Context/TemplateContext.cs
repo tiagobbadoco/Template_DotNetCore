@@ -13,11 +13,16 @@ namespace Template.Data.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new RoleMap());
+            modelBuilder.ApplyConfiguration(new UserRoleMap());
+
             modelBuilder.SeedData();
 
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRole { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +10,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Template.Application.AutoMapper;
 using Template.Data.Context;
-using Template.Domain.Entities;
 using Template.IoC;
 using Template.JWT;
 
@@ -33,8 +31,8 @@ namespace Template
             NativeInjector.RegisterServices(services);
             services.AddAutoMapper(typeof(AutoMapperSetup));
 
+
             var jwtSettings = Configuration.GetSection("JwtSettings");
-            services.AddScoped<JwtHandler>();
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -52,6 +50,8 @@ namespace Template
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.GetSection("securityKey").Value))
                 };
             });
+
+            services.AddScoped<JwtHandler>();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory

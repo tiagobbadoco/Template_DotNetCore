@@ -5,6 +5,7 @@ import { EnvironmentUrlService } from './environment-url.service';
 import { Subject } from 'rxjs';
 import { UserRegisterRequest } from '../../interfaces/users/user-register-request';
 import { UserRegisterResponse } from '../../interfaces/users/user-register-response';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthenticationService {
   private _authChangeSub = new Subject<boolean>()
   public authChanged = this._authChangeSub.asObservable();
 
-  constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService) { }
+  constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService, private _jwtHelper: JwtHelperService) { }
 
   private createCompleteRoute = (route: string, envAddress: string) => {
     return `${envAddress}/${route}`;
@@ -34,5 +35,11 @@ export class AuthenticationService {
   public logout = () => {
     localStorage.removeItem("token");
     this.sendAuthStateChangeNotification(false);
+  }
+
+  public isUserAuthenticated = (): boolean => {
+    const token = localStorage.getItem("token");
+
+    return token && !this._jwtHelper.isTokenExpired(token);
   }
 }

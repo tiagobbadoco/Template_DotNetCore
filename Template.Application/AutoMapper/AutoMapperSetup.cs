@@ -11,9 +11,11 @@ namespace Template.Application.AutoMapper
             #region ViewModelToDomain
             CreateMap<UserViewModel, User>();
             CreateMap<UserRegisterRequestViewModel, User>();
+            CreateMap<RoleViewModel, Role>();
             #endregion
             #region DomainToViewModel
             CreateMap<User, UserViewModel>();
+            CreateMap<Role, RoleViewModel>();
             #endregion
         }
     }

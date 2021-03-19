@@ -11,8 +11,11 @@ namespace Template.IoC
         public static void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         }
     }
 }

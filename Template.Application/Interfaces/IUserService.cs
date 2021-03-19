@@ -16,5 +16,9 @@ namespace Template.Application.Interfaces
         bool CheckPassword(UserViewModel user, string password);
         UserRegisterResponseViewModel Register(UserRegisterRequestViewModel user);
         #endregion
+
+        #region "Auth"
+        List<RoleViewModel> GetRoles(string id);
+        #endregion
     }
 }

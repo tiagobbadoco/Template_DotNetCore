@@ -18,8 +18,8 @@ namespace Template.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
-        {
+        public IActionResult Get() { 
+
             return Ok(this.userService.Get());
         }
 
@@ -40,6 +40,12 @@ namespace Template.Controllers
         {
 
             return Ok(this.userService.Delete(id));
+        }
+
+        [HttpGet("GetRoles/{id}")]
+        public IActionResult GetRoles(string id)
+        {
+            return Ok(userService.GetRoles(id));
         }
     }
 }

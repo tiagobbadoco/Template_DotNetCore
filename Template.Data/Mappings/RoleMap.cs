@@ -4,13 +4,12 @@ using Template.Domain.Entities;
 
 namespace Template.Data.Mappings
 {
-    public class UserMap : IEntityTypeConfiguration<User>
+    class RoleMap : IEntityTypeConfiguration<Role>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Role> builder)
         {
             builder.Property(x => x.Id).IsRequired();
             builder.Property(x => x.Name).IsRequired();
-            builder.Property(x => x.Email).IsRequired();
         }
     }
 }

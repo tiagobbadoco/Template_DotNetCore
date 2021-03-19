@@ -3,21 +3,38 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Template.Data.Context;
 
 namespace Template.Data.Migrations
 {
     [DbContext(typeof(TemplateContext))]
-    partial class TemplateContextModelSnapshot : ModelSnapshot
+    [Migration("20210318170953_Role_Initial")]
+    partial class Role_Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.4")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("RoleUser", b =>
+                {
+                    b.Property<Guid>("RolesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("RolesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RoleUser");
+                });
 
             modelBuilder.Entity("Template.Domain.Entities.Role", b =>
                 {
@@ -45,15 +62,15 @@ namespace Template.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4f081924-94f1-4a8d-8448-185e983a42a1"),
-                            DateCreated = new DateTime(2021, 3, 18, 16, 8, 43, 312, DateTimeKind.Local).AddTicks(7685),
+                            Id = new Guid("a0349a59-4031-4a66-8610-b1b91fd48f2e"),
+                            DateCreated = new DateTime(2021, 3, 18, 14, 9, 52, 745, DateTimeKind.Local).AddTicks(5072),
                             IsDeleted = false,
                             Name = "Administrador"
                         },
                         new
                         {
-                            Id = new Guid("f13e90df-6fec-440e-aa72-73b18c558435"),
-                            DateCreated = new DateTime(2021, 3, 18, 16, 8, 43, 312, DateTimeKind.Local).AddTicks(7740),
+                            Id = new Guid("b9417509-1ae0-43ca-9a1f-942039da1498"),
+                            DateCreated = new DateTime(2021, 3, 18, 14, 9, 52, 745, DateTimeKind.Local).AddTicks(5276),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -92,8 +109,8 @@ namespace Template.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a62e3cf4-7352-414f-a835-d73fa7787a05"),
-                            DateCreated = new DateTime(2021, 3, 18, 16, 8, 43, 311, DateTimeKind.Local).AddTicks(5611),
+                            Id = new Guid("4d26e96b-5ed1-48cc-8ae4-a8dd54e4a64c"),
+                            DateCreated = new DateTime(2021, 3, 18, 14, 9, 52, 743, DateTimeKind.Local).AddTicks(3010),
                             Email = "admin@template.com",
                             IsDeleted = false,
                             Name = "Administrador",
@@ -101,64 +118,19 @@ namespace Template.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Template.Domain.Entities.UserRole", b =>
+            modelBuilder.Entity("RoleUser", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.HasIndex("UserId", "RoleId")
-                        .IsUnique();
-
-                    b.ToTable("UserRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("32385c3b-326c-4a3f-9f3e-a698d4815a2c"),
-                            DateCreated = new DateTime(2021, 3, 18, 16, 8, 43, 314, DateTimeKind.Local).AddTicks(621),
-                            IsDeleted = false,
-                            RoleId = new Guid("4f081924-94f1-4a8d-8448-185e983a42a1"),
-                            UserId = new Guid("a62e3cf4-7352-414f-a835-d73fa7787a05")
-                        });
-                });
-
-            modelBuilder.Entity("Template.Domain.Entities.UserRole", b =>
-                {
-                    b.HasOne("Template.Domain.Entities.Role", "Role")
+                    b.HasOne("Template.Domain.Entities.Role", null)
                         .WithMany()
-                        .HasForeignKey("RoleId")
+                        .HasForeignKey("RolesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Template.Domain.Entities.User", "User")
+                    b.HasOne("Template.Domain.Entities.User", null)
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Role");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Template.Application.Interfaces;
@@ -15,11 +16,15 @@ namespace Template.Application.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository userRepository;
+        private readonly IUserRoleRepository userRoleRepository;
+        private readonly IRoleRepository roleRepository;
         private readonly IMapper mapper;
 
-        public UserService(IUserRepository userRepository, IMapper mapper)
+        public UserService(IUserRepository userRepository, IRoleRepository roleRepository, IUserRoleRepository userRoleRepository, IMapper mapper)
         {
             this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
+            this.userRoleRepository = userRoleRepository;
             this.mapper = mapper;
         }
 
@@ -90,9 +95,18 @@ namespace Template.Application.Services
 
             _user.DateCreated = DateTime.Now;
 
+
             try
             {
-                userRepository.Create(_user);
+
+                this.userRoleRepository.Create(new UserRole
+                {
+                    Id = Guid.NewGuid(),
+                    DateCreated = DateTime.Now,
+                    IsDeleted = false,
+                    UserId = userRepository.Create(_user).Id,
+                    RoleId = roleRepository.Find(x => x.Name == "User" & !x.IsDeleted).Id
+                }); ;
 
                 return new UserRegisterResponseViewModel { IsSuccessfulRegistration = true };
             }
@@ -100,6 +114,24 @@ namespace Template.Application.Services
             {
                 return new UserRegisterResponseViewModel { IsSuccessfulRegistration = false, Errors = new List<string> { e.Message } };
             }
+        }
+        #endregion
+
+        #region "Auth"
+        public List<RoleViewModel> GetRoles(string id)
+        {
+            List<Role> roles = roleRepository.Query(x => !x.IsDeleted).ToList();
+            List<UserRole> userRoles = userRoleRepository.Query(x => !x.IsDeleted & x.UserId == Guid.Parse(id)).ToList();
+
+            List<RoleViewModel> response = new List<RoleViewModel>();
+
+            foreach(Role role in roles)
+            {
+                if (userRoles.Find(x => x.RoleId == role.Id) != null)
+                    response.Add(new RoleViewModel { Id = role.Id, Name = role.Name });
+            }
+
+            return response;
         }
         #endregion
     }
