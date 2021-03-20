@@ -25,19 +25,19 @@ O projeto foi gerado originalmente vazio, sem autenticação, e está sendo dese
 - [x] Login/Register
 - [x] User/Role Authorizarion with Claims
 - [x] Error Handling (400, 401, 403, 404)
-- [] Error Logging 
-- [] Data logging
-- [] Email Handler
-- [] Passwork reset
-- [] Email confirmation
-- [] 2-step verification
-- [] User Lockout
-- [] Passwork encryption
-- [] External auth (Facebook, Google, etc)
-- [] Profile management
-- [] Roles management
-- [] Moq
-- [] Front-End
+- [ ] Error Logging 
+- [ ] Data logging
+- [ ] Email Handler
+- [ ] Passwork reset
+- [ ] Email confirmation
+- [ ] 2-step verification
+- [ ] User Lockout
+- [ ] Passwork encryption
+- [ ] External auth (Facebook, Google, etc)
+- [ ] Profile management
+- [ ] Roles management
+- [ ] Moq
+- [ ] Front-End
 
 ## Special Thanks
 Nicolas Fontes - [Medium](https://nicolas-rfontes.medium.com/)
