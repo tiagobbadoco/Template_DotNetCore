@@ -50,7 +50,7 @@ Code-Maze - [Guides](https://code-maze.com/)
 
 Most of features was developed using the guides they have (for free).
 
-A maioria das funcionalidades foram desenvolvidas com base no guias que eles tem (gratis).
+[A maioria das funcionalidades foram desenvolvidas com base no guias que eles tem (gratis).]
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
