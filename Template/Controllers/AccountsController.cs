@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using Template.Application.Interfaces;
 using Template.Application.ViewModels;
 using Template.Domain.Entities;
@@ -48,6 +50,16 @@ namespace Template.Controllers
                 return BadRequest(response);
 
             
+        }
+
+        [HttpGet("Privacy")]
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Privacy()
+        {
+            var claims = User.Claims
+                .Select(c => new { c.Type, c.Value })
+                .ToList();
+            return Ok(claims);
         }
     }
 }

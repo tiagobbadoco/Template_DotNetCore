@@ -12,7 +12,12 @@ export class NavMenuComponent implements OnInit {
   public isUserAuthenticated: boolean;
   isExpanded = false;
 
-  constructor(private _authService: AuthenticationService, private _router: Router) { }
+  constructor(private _authService: AuthenticationService, private _router: Router) {
+    this._authService.authChanged
+      .subscribe(res => {
+        this.isUserAuthenticated = res;
+      })
+  }
 
   ngOnInit(): void {
     this._authService.authChanged

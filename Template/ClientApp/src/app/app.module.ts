@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { ForbiddenComponent } from './error-pages/forbidden/forbidden.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { AuthGuard } from './shared/guards/auth.guard';
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ForbiddenComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -28,6 +30,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'administration', loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule), canActivate: [AuthGuard] },
       { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
+      { path: 'forbidden', component: ForbiddenComponent },
       { path: '404', component: NotFoundComponent },
       { path: '**', redirectTo: '/404' }
     ]),
