@@ -45,15 +45,15 @@ namespace Template.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4f081924-94f1-4a8d-8448-185e983a42a1"),
-                            DateCreated = new DateTime(2021, 3, 18, 16, 8, 43, 312, DateTimeKind.Local).AddTicks(7685),
+                            Id = new Guid("8c99e89e-6395-47ef-996e-218f79d915dd"),
+                            DateCreated = new DateTime(2021, 3, 20, 15, 36, 14, 382, DateTimeKind.Local).AddTicks(5019),
                             IsDeleted = false,
                             Name = "Administrador"
                         },
                         new
                         {
-                            Id = new Guid("f13e90df-6fec-440e-aa72-73b18c558435"),
-                            DateCreated = new DateTime(2021, 3, 18, 16, 8, 43, 312, DateTimeKind.Local).AddTicks(7740),
+                            Id = new Guid("d40350c8-0334-4cdf-b2e6-9cfe92717026"),
+                            DateCreated = new DateTime(2021, 3, 20, 15, 36, 14, 382, DateTimeKind.Local).AddTicks(5059),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -83,6 +83,7 @@ namespace Template.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -92,8 +93,8 @@ namespace Template.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a62e3cf4-7352-414f-a835-d73fa7787a05"),
-                            DateCreated = new DateTime(2021, 3, 18, 16, 8, 43, 311, DateTimeKind.Local).AddTicks(5611),
+                            Id = new Guid("12fea14d-3702-4779-b2f7-daed43c515fa"),
+                            DateCreated = new DateTime(2021, 3, 20, 15, 36, 14, 382, DateTimeKind.Local).AddTicks(2979),
                             Email = "admin@template.com",
                             IsDeleted = false,
                             Name = "Administrador",
@@ -126,19 +127,18 @@ namespace Template.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId", "RoleId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserRole");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("32385c3b-326c-4a3f-9f3e-a698d4815a2c"),
-                            DateCreated = new DateTime(2021, 3, 18, 16, 8, 43, 314, DateTimeKind.Local).AddTicks(621),
+                            Id = new Guid("5779259f-c450-4c98-b0ef-804ac75ada2c"),
+                            DateCreated = new DateTime(2021, 3, 20, 15, 36, 14, 384, DateTimeKind.Local).AddTicks(1698),
                             IsDeleted = false,
-                            RoleId = new Guid("4f081924-94f1-4a8d-8448-185e983a42a1"),
-                            UserId = new Guid("a62e3cf4-7352-414f-a835-d73fa7787a05")
+                            RoleId = new Guid("8c99e89e-6395-47ef-996e-218f79d915dd"),
+                            UserId = new Guid("12fea14d-3702-4779-b2f7-daed43c515fa")
                         });
                 });
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Template.Data.Extensions;
-using Template.Data.Mappings;
 using Template.Domain.Entities;
 
 namespace Template.Data.Context
@@ -12,10 +11,6 @@ namespace Template.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserMap());
-            modelBuilder.ApplyConfiguration(new RoleMap());
-            modelBuilder.ApplyConfiguration(new UserRoleMap());
-
             modelBuilder.SeedData();
 
             base.OnModelCreating(modelBuilder);

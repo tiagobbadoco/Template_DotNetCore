@@ -10,8 +10,8 @@ using Template.Data.Context;
 namespace Template.Data.Migrations
 {
     [DbContext(typeof(TemplateContext))]
-    [Migration("20210318175939_UserRole_Initial")]
-    partial class UserRole_Initial
+    [Migration("20210320183615_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,15 +47,15 @@ namespace Template.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e94383f0-931b-483c-b8fc-b48d38fa829d"),
-                            DateCreated = new DateTime(2021, 3, 18, 14, 59, 39, 72, DateTimeKind.Local).AddTicks(2107),
+                            Id = new Guid("8c99e89e-6395-47ef-996e-218f79d915dd"),
+                            DateCreated = new DateTime(2021, 3, 20, 15, 36, 14, 382, DateTimeKind.Local).AddTicks(5019),
                             IsDeleted = false,
                             Name = "Administrador"
                         },
                         new
                         {
-                            Id = new Guid("b7e4ea45-541a-4917-8d43-e0673eb9056b"),
-                            DateCreated = new DateTime(2021, 3, 18, 14, 59, 39, 72, DateTimeKind.Local).AddTicks(2160),
+                            Id = new Guid("d40350c8-0334-4cdf-b2e6-9cfe92717026"),
+                            DateCreated = new DateTime(2021, 3, 20, 15, 36, 14, 382, DateTimeKind.Local).AddTicks(5059),
                             IsDeleted = false,
                             Name = "User"
                         });
@@ -85,6 +85,7 @@ namespace Template.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -94,8 +95,8 @@ namespace Template.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a0153f3b-1a00-4194-ae05-141248e38cf4"),
-                            DateCreated = new DateTime(2021, 3, 18, 14, 59, 39, 70, DateTimeKind.Local).AddTicks(7423),
+                            Id = new Guid("12fea14d-3702-4779-b2f7-daed43c515fa"),
+                            DateCreated = new DateTime(2021, 3, 20, 15, 36, 14, 382, DateTimeKind.Local).AddTicks(2979),
                             Email = "admin@template.com",
                             IsDeleted = false,
                             Name = "Administrador",
@@ -128,32 +129,31 @@ namespace Template.Data.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.HasIndex("UserId", "RoleId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
-                    b.ToTable("UsersRoles");
+                    b.ToTable("UserRole");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("26a597b7-4b48-4045-b7c4-557aeccc6558"),
-                            DateCreated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Id = new Guid("5779259f-c450-4c98-b0ef-804ac75ada2c"),
+                            DateCreated = new DateTime(2021, 3, 20, 15, 36, 14, 384, DateTimeKind.Local).AddTicks(1698),
                             IsDeleted = false,
-                            RoleId = new Guid("e94383f0-931b-483c-b8fc-b48d38fa829d"),
-                            UserId = new Guid("a0153f3b-1a00-4194-ae05-141248e38cf4")
+                            RoleId = new Guid("8c99e89e-6395-47ef-996e-218f79d915dd"),
+                            UserId = new Guid("12fea14d-3702-4779-b2f7-daed43c515fa")
                         });
                 });
 
             modelBuilder.Entity("Template.Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("Template.Domain.Entities.Role", "Role")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Template.Domain.Entities.User", "User")
-                        .WithMany("Roles")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -161,16 +161,6 @@ namespace Template.Data.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Template.Domain.Entities.Role", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Template.Domain.Entities.User", b =>
-                {
-                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }
