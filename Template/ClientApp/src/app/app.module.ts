@@ -12,6 +12,9 @@ import { ErrorHandlerService } from './shared/services/error-handler.service';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { ForbiddenComponent } from './error-pages/forbidden/forbidden.component';
+import { NavHeaderComponent } from './nav-header/nav-header.component';
+import { NavFooterComponent } from './nav-footer/nav-footer.component';
+import { NavSettingsComponent } from './nav-settings/nav-settings.component';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import { ForbiddenComponent } from './error-pages/forbidden/forbidden.component'
     NavMenuComponent,
     HomeComponent,
     NotFoundComponent,
-    ForbiddenComponent
+    ForbiddenComponent,
+    NavHeaderComponent,
+    NavFooterComponent,
+    NavSettingsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
