@@ -26,11 +26,10 @@
   <link rel="stylesheet" href="assets/plugins/summernote/summernote-bs4.min.css">
   <base href="/" />
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
-  
-  <app-root>
-  <div class="wrapper"></div>
-  </app-root>
+<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
+  <div class="wrapper">
+    <app-root></app-root>
+  </div>
   <!-- ./wrapper -->
   <!-- jQuery -->
   <script src="assets/plugins/jquery/jquery.min.js"></script>
@@ -38,7 +37,7 @@
   <script src="assets/plugins/jquery-ui/jquery-ui.min.js"></script>
   <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
   <script>
-  $.widget.bridge('uibutton', $.ui.button)
+    $.widget.bridge('uibutton', $.ui.button)
   </script>
   <!-- Bootstrap 4 -->
   <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
